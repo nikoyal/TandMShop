@@ -1,0 +1,73 @@
+﻿@model TandMShop.Web.ViewModels.BedSet.AddBedSetViewModel
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.1/tinymce.min.js"></script>   
+    <script type="text/javascript">
+        tinymce.init({
+            selector: '#myTextarea',
+            height: 300,
+            theme: 'modern',
+            plugins: [
+                'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                'searchreplace wordcount visualblocks visualchars code fullscreen',
+                'insertdatetime media nonbreaking save table contextmenu directionality',
+                'emoticons template paste textcolor colorpicker textpattern imagetools'
+            ],
+            toolbar1: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+            toolbar2: 'print preview media | forecolor backcolor emoticons',
+            image_advtab: true
+        });
+    </script>
+
+
+<form method="post" asp-area="Administration" asp-controller="Dashboard" asp-action="AddBedSet">
+    <div>
+        <label asp-for="Name">Име</label>
+        <input asp-for="Name" style="color:black" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Picture1">Снимка1</label>
+        <input asp-for="Picture1" style="color:black" class="form-control" />
+        <span asp-validation-for="Picture1" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Picture2">Снимка2</label>
+        <input asp-for="Picture2" style="color:black" class="form-control" />
+        <span asp-validation-for="Picture2" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Picture3">Снимка3</label>
+        <input asp-for="Picture3" style="color:black" class="form-control" />
+        <span asp-validation-for="Picture3" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Description">Описание</label>
+        <textarea id="myTextarea" asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Matter">Материя</label>
+        <input asp-for="Matter" style="color:black" class="form-control" />
+        <span asp-validation-for="Matter" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="OriginalPrice">Оригинална цена</label>
+        <input asp-for="OriginalPrice" style="color:black" class="form-control" />
+        <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="CurrentPrice">Текуща цена</label>
+        <input asp-for="CurrentPrice" style="color:black" class="form-control" />
+        <span asp-validation-for="CurrentPrice" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Review">Оценка</label>
+        <input asp-for="Review" style="color:black" class="form-control" />
+        <span asp-validation-for="Review" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" />
+</form>
+<br />
+<br />
+<br />
+<br />
+<br />

@@ -1,0 +1,44 @@
+﻿@model TandMShop.Web.ViewModels.BedSet.AllBedSetsViewModel
+<div style="border:solid; width:600px; height:30px; margin-bottom:15px; display:inline-block; margin-left:15px; text-align:center; border-width:1px;">
+    @*<i class="fas fa-cut"></i>*@
+    <p3>Всеки един от продуктите, може да бъде изработен по размер на клиента!</p3>
+    @*<i class="fas fa-cut"></i>*@
+</div>
+<form style="margin-left: 155px;     display: inline-block;">
+    Подреждане: <select id="orderby" onchange="OrderBy()">
+        <option value="" selected>По подразбиране</option>
+        <option value="Name">По Име</option>
+        <option value="PriceDown">По Цена(ниска - висока)</option>
+        <option value="PriceUp">По Цена(висока - ниска)</option>
+    </select>
+</form>
+@*<div class="search-container" style="float:right">
+    <form action="/action_page.php">
+        <input type="text" placeholder="Търсене.." name="search">
+        <button type="submit"><i class="fa fa-search"></i></button>
+    </form>
+</div>*@
+<div id="partial">
+    @Html.Partial("ViewAllPartial")
+</div>
+<br />
+<br />
+<br />
+
+
+<script>
+    function OrderBy() {
+        var orderByValue = document.getElementById("orderby").value;
+        $.ajax({
+            url: 'ViewAllPartial',
+            data: { orderBy: orderByValue }, //your data
+            type: 'GET',
+            contentType: 'application/json',
+            dataType: 'json',
+
+            complete: function (result) {
+                $("#partial").html(result.responseText)
+            },
+        });
+    }
+</script>

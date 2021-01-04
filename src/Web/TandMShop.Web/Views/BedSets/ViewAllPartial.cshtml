@@ -1,0 +1,27 @@
+﻿@model TandMShop.Web.ViewModels.BedSet.AllBedSetsViewModel
+@foreach (var set in Model.Beds)
+{
+    int starsToFill = @set.Review;
+<a class="card" style="display: inline-block; text-decoration:none; margin-left: 15px; margin-right: 15px; margin-bottom: 15px" asp-controller="BedSets" asp-action="ById" asp-route-id="@set.Id">
+    <img class="bedimage" src="@set.Picture1" onmouseover="this.src = '@set.Picture2';" onmouseout="this.src = '@set.Picture1';" alt="Avatar" style="width:100%; ">
+    <div class="container">
+        <p style="display: inline-block; color:black; float:left; font-weight:bold;">@set.Name</p>
+        <p style="color:black; margin-left:200px">100% @set.Matter<p/>
+        <p style="color:red; display:inline-block; text-decoration:line-through">@set.OriginalPrice.ToString("0.00")лв.</p>
+        <p style="color: black; display: inline-block; margin-right: 25px">@set.CurrentPrice.ToString("0.00")лв.</p>
+        <div style="display: inline-block;">
+            @for (int i = 6; i > 0; i--)
+            {
+                if (starsToFill > 0)
+                {
+                    <span class="fa fa-star starchecked"></span> starsToFill -= 1;
+                }
+                else
+                {
+                    <span class="fa fa-star starunchecked"></span>
+                }
+             }
+        </div>
+    </div>
+</a>
+}

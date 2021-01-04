@@ -1,0 +1,189 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+.oneClickOrder {
+    background-color: #27718c;
+    border-radius: 20px;
+    border: 1px solid #29668f;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 17px 31px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #3d768a;
+}
+.oneClickOrder:hover {
+	background-color:#408c99;
+    color: #ffffff;
+    text-decoration:none;
+}
+.oneClickOrder:active {
+	position:relative;
+	top:1px;
+    color: #ffffff;
+    text-decoration:none;
+}
+
+.addToCart {
+    background-color: #17bd43;
+    border-radius: 20px;
+    border: 2px solid #18ab29;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 17px 31px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #2f6627;
+    text-decoration: none;
+}
+
+.addToCart:hover {
+    background: linear-gradient(to bottom, #69c23a 5%, #44c767 100%);
+    background-color: #69c23a;
+    text-decoration:none;
+    color: #ffffff;
+}
+
+.addToCart:active {
+    position: relative;
+    text-decoration:none;
+    top: 1px;
+    color: #ffffff;
+}
+
+
+.starchecked {
+    color: orange;
+}
+
+.starunchecked {
+    color: black;
+}
+
+.productHeader {
+    text-align: center;
+    border-bottom: 1px solid;
+    border-color: lightgray;
+}
+
+.pricelable {
+    background-color: #e2e2e2;
+    width: 550px;
+    height: 100px;
+    border: 1px dashed;
+    padding-top: 20px;
+    padding-right: 5px;
+    padding-left: 35px;
+    border-left: 0px;
+    border-right: 0px;
+    margin: 20px;
+    text-align: center;
+    margin-top: 46px;
+}
+
+.search-container input {
+    padding: 6px;
+}
+
+.search-container button {
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 16px;
+    color:white;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    margin-left: -4px;
+}
+
+.search-container button:hover {
+    background-color:antiquewhite;
+}
+
+.card {
+    box-shadow: 3 4px 11px 1 rgba(0,0,0,0.6);
+    transition: 0.3s;
+    width: 30%;
+    height: 30%;
+}
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    }
+
+/*
+*/
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}

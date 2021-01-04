@@ -1,0 +1,127 @@
+﻿@model TandMShop.Web.ViewModels.BedSet.BedSetByIdViewModel
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="productHeader">
+    <h1>@Model.Name</h1>
+</div>
+<div class="w3-content w3-display-container" style="width:500px; height:500px; margin: 0px; padding: 0px; display:inline-block; margin-top: 46px;">
+    <img class="mySlides" src="@Model.Picture1" style="width:100%; height:100%">
+    <img class="mySlides" src="@Model.Picture2" style="width:100%; height:100%">
+    <img class="mySlides" src="@Model.Picture3" style="width:100%; height:100%">
+
+    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+
+    <center style="margin-top:10px">
+        <input type="image" src="@Model.Picture1" style="border: solid; border-width: 1px; width: 100px; height: 100px;" onclick="currentDiv(1)" />
+        <input type="image" src="@Model.Picture2" style="border: solid; border-width: 1px; width: 100px; height: 100px;" onclick="currentDiv(2)" />
+        <input type="image" src="@Model.Picture3" style="border: solid; border-width: 1px; width: 100px; height: 100px;" onclick="currentDiv(3)" />
+    </center>
+</div>
+<div style="display:inline-block; float:right">
+    <div>
+        <div class="pricelable">
+            <p style="fantasy; font-size: 40px; color: red; display: inline-block; text-decoration: line-through">@Model.OriginalPrice.ToString("0.00")лв.</p>
+            <p style="font-family: fantasy; font-size: 40px; color: black; display: inline-block; margin-right: 35px">@Model.CurrentPrice.ToString("0.00")лв.</p>
+        </div>
+    </div>
+
+    <div class="productHeader" style="margin-left:20px; width:550px;">
+        <div style="display: inline-block; margin-right:270px;">
+            @{
+                int starsToFill = Model.Review;
+            }
+            @for (int i = 6; i > 0; i--)
+            {
+                if (starsToFill > 0)
+                {
+                    <span class="fa fa-star starchecked"></span>
+                    starsToFill -= 1;
+                }
+                else
+                {
+                    <span class="fa fa-star starunchecked"></span>}
+            }
+        </div>
+        <spam style="display: inline-block;">Производство: BG</spam>
+    </div>
+    <div style="margin-top:10px">
+        <a href="#" class="addToCart" style="margin-left:25px; margin-right:35px;">ДОБАВИ В КОШНИЦА<i style="width:4px; height:4px" class="fas fa-cart-plus"></i></a>
+        <a href="#" class="oneClickOrder">ПОРЪЧКА ЕДИН КЛИК <i style="width:4px; height:4px" class="fas fa-mouse-pointer"></i></a>
+    </div>
+    <div style="margin-left:17px;margin-top:15px ;width:550px; height:90px; border-top: 1px solid; border-color:lightgray; padding-bottom:20px;">
+        <br />
+        <i class="fas fa-truck-loading" style="margin-top: 5px; display: inline-block; color: #408c99; font-size: 50px; float: left"></i>
+        <div style="display:inline-block; margin-left:7px;">
+            <p style="display:block; font-weight: bold; font-size:20px;margin-top:0px; margin-bottom:0px;">Безплатна Доставка</p>
+            <p style="display:block; font-size:18px; margin-top:0px">При покупка над 79.99лв.</p>
+        </div>
+    </div>
+    <div style="margin-left:17px;margin-top:15px ;width:550px; height:90px; border-top: 1px solid; border-color:lightgray; padding-bottom:20px;">
+        <br />
+        <i class="fas fa-money-bill-alt" style="margin-top:5px;display:inline-block; color: #408c99; font-size:50px; float:left"></i>
+        <div style="display:inline-block; margin-left:7px;">
+            <p style="display:block; font-weight: bold; font-size:20px;margin-top:0px; margin-bottom:0px;">Най-ниска цена</p>
+            <p style="display:block; font-size:18px; margin-top:0px">Няма да намерите изгодна оферта!</p>
+        </div>
+    </div>
+    <div style="margin-left:17px;margin-top:15px ;width:550px; height:90px; border-top: 1px solid; border-color:lightgray; padding-bottom:20px;">
+        <br />
+        <i class="fas fa-truck" style="margin-top: 5px; display: inline-block; color: #408c99; font-size: 50px; float: left"></i>
+        <div style="display:inline-block; margin-left:7px;">
+            <p style="display:block; font-weight: bold; font-size:20px;margin-top:0px; margin-bottom:0px;">Бърза доставка</p>
+            <p style="display:block; font-size:18px; margin-top:0px">Доставка за по малко от 7 дни!</p>
+        </div>
+    </div>
+    <div style="margin-left:17px;margin-top:15px ;width:550px; height:90px; border-top: 1px solid; border-bottom: 1px solid; border-color:lightgray; padding-bottom:20px;">
+        <br />
+        <i class="fas fa-exchange-alt" style="margin-top: 5px; display:inline-block; color: #408c99; font-size: 50px; float: left"></i>
+        <div style="display:inline-block; margin-left:7px;">
+            <p style="display:block; font-weight: bold; font-size:20px;margin-top:0px; margin-bottom:0px;">Бърза и лесна замяна</p>
+            <p style="display:block; font-size:18px; margin-top:0px">Лесна замяна на продукта до 14 дни!</p>
+        </div>
+    </div>
+</div>
+<div style="width: 100%; margin-bottom:65px; margin-top:45px; border: 1px solid; border-color: lightgray">
+    <p>@Html.Raw(Model.Description)</p>
+</div>
+<div style="width:100%; position:relative; left:10px;">
+    <form asp-controller="Comments" asp-action="AddComment" method="post">
+        <input type="hidden" name="BedSetId" value="@this.Model.Id" />
+        <div>
+            <label for="UserName"></label>
+            <textarea style="height:250px" name="UserName" class="form-control"></textarea>
+            <span class="text-danger"></span>
+        </div>
+        <div>
+            <label for="Content"></label>
+            <textarea style="height:250px" name="Content" class="form-control"></textarea>
+            <span class="text-danger"></span>
+        </div>
+        <div>
+            <input style=" position: absolute; top: 84%; right: 0.5%;" type="submit" class="btn btn-primary" id="submit" value="Добави" />
+        </div>
+    </form>
+</div>
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function currentDiv(n) {
+        showDivs(slideIndex = n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>
