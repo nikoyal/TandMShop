@@ -6,9 +6,16 @@
     <img class="bedimage" src="@set.Picture1" onmouseover="this.src = '@set.Picture2';" onmouseout="this.src = '@set.Picture1';" alt="Avatar" style="width:100%; ">
     <div class="container">
         <p style="display: inline-block; color:black; float:left; font-weight:bold;">@set.Name</p>
-        <p style="color:black; margin-left:200px">100% @set.Matter<p/>
-        <p style="color:red; display:inline-block; text-decoration:line-through">@set.OriginalPrice.ToString("0.00")лв.</p>
-        <p style="color: black; display: inline-block; margin-right: 25px">@set.CurrentPrice.ToString("0.00")лв.</p>
+        <p style="color:black; margin-left:250px">@set.Matter<p/>
+        @if(set.OutOfStock == false)
+        {
+            <p style="color:red; display:inline-block; text-decoration:line-through">@set.OriginalPrice.ToString("0.00")лв.</p>
+            <p style="color: black; display: inline-block; margin-right: 25px">@set.CurrentPrice.ToString("0.00")лв.</p>
+        }
+        else
+        {
+            <p style="color:red; display:inline-block; text-decoration:underline; margin-right: 90px">Изчерпан</p>
+        }
         <div style="display: inline-block;">
             @for (int i = 6; i > 0; i--)
             {

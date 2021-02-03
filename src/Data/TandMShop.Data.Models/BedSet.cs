@@ -19,6 +19,7 @@ namespace TandMShop.Data.Models
         public string Picture1 { get; set; }
         public string Picture2 { get; set; }
         public string Picture3 { get; set; }
+        public bool OutOfStock { get; set; }
         public int Orders { get; set; }
         public int Review { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

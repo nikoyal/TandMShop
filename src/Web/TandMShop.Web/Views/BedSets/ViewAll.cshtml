@@ -6,21 +6,61 @@
 </div>
 <form style="margin-left: 155px;     display: inline-block;">
     Подреждане: <select id="orderby" onchange="OrderBy()">
-        <option value="" selected>По подразбиране</option>
+        <option value="">По подразбиране</option>
         <option value="Name">По Име</option>
-        <option value="PriceDown">По Цена(ниска - висока)</option>
+        <option value="" selected>По Цена(ниска - висока)</option>
         <option value="PriceUp">По Цена(висока - ниска)</option>
     </select>
 </form>
 @*<div class="search-container" style="float:right">
-    <form action="/action_page.php">
-        <input type="text" placeholder="Търсене.." name="search">
-        <button type="submit"><i class="fa fa-search"></i></button>
-    </form>
-</div>*@
+        <form action="/action_page.php">
+            <input type="text" placeholder="Търсене.." name="search">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+    </div>*@
 <div id="partial">
     @Html.Partial("ViewAllPartial")
 </div>
+<nav>
+    <ul class="pagination justify-content-center">
+        @if (this.Model.CurrentPage == 1)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="BedSets" asp-action="ViewAll" asp-route-page="@(this.Model.CurrentPage - 1)">Previous</a>
+            </li>
+        }
+        @for (int i = 1; i <= this.Model.PagesCount; i++)
+        {
+            var active = string.Empty;
+            if (i == this.Model.CurrentPage)
+            {
+                active = "active";
+            }
+            //tofix
+            <li class="page-item @active">
+                <a class="page-link" asp-controller="BedSets" asp-action="ViewAll" asp-route-page="@i">@i</a>
+            </li>
+        }
+        @if (this.Model.CurrentPage == this.Model.PagesCount)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item">
+                <a class="page-link" asp-controller="BedSets" asp-action="ViewAll" asp-route-page="@(this.Model.CurrentPage + 1)">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
 <br />
 <br />
 <br />

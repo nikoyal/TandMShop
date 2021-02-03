@@ -1,0 +1,18 @@
+﻿@model TandMShop.Web.ViewModels.BedSet.BedSetByIdViewModel
+<form method="post" asp-controller="Orders" asp-action="OneClickOrder">
+    <input type="text" name="ProductId" style="visibility:hidden" value="@Model.Id" />
+
+    <label for="Adress">Адрес:</label>
+    <input type="text" name="Adress" />
+
+    <label for="Name">Две Имена:</label>
+    <input type="text" name="Name" />
+
+    <label for="Telephone">Телефон:</label>
+    <input type="text" name="Telephone" />
+
+    <label for="Email">Имейл:</label>
+    <input type="text" />
+
+    <input class="btn btn-primary" type="submit" id="submit" value="Добави" />
+</form>

@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Orders\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using TandMShop.Services.Mapping;
 using TandMShop.Data.Models;
+using TandMShop.Web.ViewModels.Comments;
 
 namespace TandMShop.Web.ViewModels.BedSet
 {
@@ -18,5 +19,7 @@ namespace TandMShop.Web.ViewModels.BedSet
         public string Picture2 { get; set; }
         public string Picture3 { get; set; }
         public int Review { get; set; }
+        public bool OutOfStock { get; set; }
+        public IEnumerable<ShowCommentViewModel> Comments { get; set; }
     }
 }

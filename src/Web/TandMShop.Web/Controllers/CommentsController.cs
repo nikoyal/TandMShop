@@ -19,10 +19,10 @@ namespace TandMShop.Web.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.RedirectToAction("ById", "BedSets", new { id = input.BedSetId });
             }
             await this.commentService.Create(input.BedSetId, input.UserName, input.Content);
-            return this.RedirectToAction("ShowComments", "BedSets");
+            return this.RedirectToAction("ById", "BedSets");
         }
     }
 }

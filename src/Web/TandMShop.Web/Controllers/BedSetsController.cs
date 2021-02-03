@@ -11,6 +11,7 @@ namespace TandMShop.Web.Controllers
 {
     public class BedSetsController : BaseController
     {
+        private const int itemsPerPage = 18;
         private readonly IBedSetService bedSetService;
         private readonly IAddItemService addItemService;
         private readonly ICommentService commentService;
@@ -20,29 +21,21 @@ namespace TandMShop.Web.Controllers
             this.bedSetService = bedSetService;
             this.addItemService = addItemService;
         }
-        public IActionResult ViewAll()
+        public IActionResult ViewAll(string orderBy = "" ,int page = 1)
         {
             var viewModel = new AllBedSetsViewModel();
-            var bedSets = this.bedSetService.GetAll<BedSetByIdViewModel>();
+            var bedSets = this.bedSetService.GetAll<BedSetByIdViewModel>(orderBy,itemsPerPage, (page - 1) * itemsPerPage);
+            viewModel.PagesCount = (int)Math.Ceiling((double)this.bedSetService.AllCount() / itemsPerPage);
+            viewModel.CurrentPage = page;
             viewModel.Beds = bedSets;
             return this.View(viewModel);
         }
-        public ActionResult ViewallPartial(string orderBy)
+        public ActionResult ViewallPartial(string orderBy, int page = 1)
         {
             var viewModel = new AllBedSetsViewModel();
-            var bedSets = this.bedSetService.GetAll<BedSetByIdViewModel>();
-            if (orderBy == "Name")
-            {
-                bedSets = bedSets.OrderBy(x => x.Name);
-            }
-            if (orderBy == "PriceUp")
-            {
-                bedSets = bedSets.OrderByDescending(x => x.CurrentPrice);
-            }
-            if (orderBy == "PriceDown")
-            {
-                bedSets = bedSets.OrderBy(x => x.CurrentPrice);
-            }
+            var bedSets = this.bedSetService.GetAll<BedSetByIdViewModel>(orderBy,itemsPerPage, (page - 1) * itemsPerPage);
+            viewModel.PagesCount = (int)Math.Ceiling((double)this.bedSetService.AllCount() / itemsPerPage);
+            viewModel.CurrentPage = page;
             viewModel.Beds = bedSets;
             return this.PartialView(viewModel);
         }
@@ -54,11 +47,12 @@ namespace TandMShop.Web.Controllers
             return this.View(viewModel);
         }
 
-        public IActionResult ShowComments(int bedSetId)
+        public async Task<IActionResult> OutOfStock(int id)
         {
-            var viewModel = new AllCommentsViewModel();
-            viewModel.Comments = this.commentService.GetAll<ShowCommentViewModel>(bedSetId);
-            return this.PartialView(viewModel);
+
+            await   this.bedSetService.OutOfStockSwtich(id);
+            return this.RedirectToAction("ById", "BedSets", new { id = id });
         }
+
     }
 }

@@ -108,6 +108,8 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        //endpoints.MapControllerRoute("BedSets", "ViewAll", new { controller = "BedSets", action = "ViewAllPartial" });
+                        endpoints.MapControllerRoute("BedSets", "ViewAll", new { controller = "BedSets", action = "ViewAll" });
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

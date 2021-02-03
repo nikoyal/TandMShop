@@ -2,6 +2,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="productHeader">
     <h1>@Model.Name</h1>
+    <a asp-controller="BedSets" asp-action="OutOfStock" asp-route-id="@Model.Id">Маркирай/Демаркирай ИЗЧЕРПАН</a>
 </div>
 <div class="w3-content w3-display-container" style="width:500px; height:500px; margin: 0px; padding: 0px; display:inline-block; margin-top: 46px;">
     <img class="mySlides" src="@Model.Picture1" style="width:100%; height:100%">
@@ -17,7 +18,32 @@
         <input type="image" src="@Model.Picture3" style="border: solid; border-width: 1px; width: 100px; height: 100px;" onclick="currentDiv(3)" />
     </center>
 </div>
-<div style="display:inline-block; float:right">
+<div style="display:inline-block; float:right;">
+    <div id="yourinfo" style="display:none">
+        <form method="post" asp-controller="Orders" asp-action="OneClickOrder" style="margin-top:50px">
+            <input type="text" name="ProductId" style="visibility:hidden" value="@Model.Id" />
+            <div style="display:block; ">
+                <label for="Name" style="margin-right: 18px">Имена<span style="color:red">*</span>:</label>
+                <input type="text"  name="Name" />
+
+                <label for="Adress" style="margin-right: 4px">Адрес:</label>
+                <input type="text" name="Adress" />
+            </div>
+            <div style="display:block; margin-right:18px">
+                <label for="Telephone">Телефон:</label>
+                <input type="text" name="Telephone" />
+
+                <label for="Email">Имейл:</label>
+                <input type="text" name="email" />
+            </div>
+            <div style="text-align:center">
+                <label for="Telephone" style="display:block">Населено място:</label>
+                <input type="text" name="Telephone" />
+            </div>
+                <input class="btn btn-primary" type="submit" id="submit" value="Добави" />
+        </form>
+    </div>
+    <div id="info" style="display:block">
     <div>
         <div class="pricelable">
             <p style="fantasy; font-size: 40px; color: red; display: inline-block; text-decoration: line-through">@Model.OriginalPrice.ToString("0.00")лв.</p>
@@ -44,10 +70,21 @@
         </div>
         <spam style="display: inline-block;">Производство: BG</spam>
     </div>
-    <div style="margin-top:10px">
-        <a href="#" class="addToCart" style="margin-left:25px; margin-right:35px;">ДОБАВИ В КОШНИЦА<i style="width:4px; height:4px" class="fas fa-cart-plus"></i></a>
-        <a href="#" class="oneClickOrder">ПОРЪЧКА ЕДИН КЛИК <i style="width:4px; height:4px" class="fas fa-mouse-pointer"></i></a>
-    </div>
+    @if (Model.OutOfStock == false)
+    {
+        <div style="margin-top:10px">
+            <a class="addToCart" style="margin-left:25px; margin-right:35px;">ДОБАВИ В КОШНИЦА<i style="width:4px; height:4px" class="fas fa-cart-plus"></i></a>
+            <a class="oneClickOrder" onmousedown="SwitchToOneClick()">ПОРЪЧКА ЕДИН КЛИК <i style="width:4px; height:4px" class="fas fa-mouse-pointer"></i></a>
+        </div>
+    }
+    else
+    {
+        <br />
+        <div style="margin-top:10px">
+            <p style="color:red;">Продуктът е изчерпан, за да поръчате голям размер отидете на конакти</p>
+        </div>
+        <br />
+    }
     <div style="margin-left:17px;margin-top:15px ;width:550px; height:90px; border-top: 1px solid; border-color:lightgray; padding-bottom:20px;">
         <br />
         <i class="fas fa-truck-loading" style="margin-top: 5px; display: inline-block; color: #408c99; font-size: 50px; float: left"></i>
@@ -81,28 +118,100 @@
         </div>
     </div>
 </div>
+</div>
+
 <div style="width: 100%; margin-bottom:65px; margin-top:45px; border: 1px solid; border-color: lightgray">
     <p>@Html.Raw(Model.Description)</p>
 </div>
-<div style="width:100%; position:relative; left:10px;">
-    <form asp-controller="Comments" asp-action="AddComment" method="post">
-        <input type="hidden" name="BedSetId" value="@this.Model.Id" />
-        <div>
-            <label for="UserName"></label>
-            <textarea style="height:250px" name="UserName" class="form-control"></textarea>
-            <span class="text-danger"></span>
-        </div>
-        <div>
-            <label for="Content"></label>
-            <textarea style="height:250px" name="Content" class="form-control"></textarea>
-            <span class="text-danger"></span>
-        </div>
-        <div>
-            <input style=" position: absolute; top: 84%; right: 0.5%;" type="submit" class="btn btn-primary" id="submit" value="Добави" />
-        </div>
-    </form>
+<div style="background-color:#f2f2f2; padding-top:8px; border-radius:20px; padding-right:18px; padding-bottom:20px">
+    <div style="width:100%; position:relative; left:10px;">
+        <form asp-controller="Comments" asp-action="AddComment" method="post" onsubmit="return ValidateInput()">
+            <input type="hidden" name="BedSetId" value="@this.Model.Id" />
+            <div style="display:inline-block;">
+                <label style="display:inline-block; margin-bottom:-5px" for="UserName">Вашето име:</label>
+                <span style="display:inline-block; visibility:hidden; color:red" id="WarnName">Името трябва да е между 3 и 25 символа!</span>
+                <br/>
+                <textarea style="display:inline-block; height:30px; width:250px; resize:none; margin-bottom:-7px" name="UserName" id="username" class="form-control"></textarea>
+                <div style="display:inline-block; margin-left:200px; margin-right:205px;">
+                    <p style="display:inline-block">Оценка: </p>
+                    <span class="fa fa-star" onmouseover="ColorStarsOnHover('st1')" onmousedown="SelectStar('st1')" id="st1"></span>
+                    <span class="fa fa-star" onmouseover="ColorStarsOnHover('st2')" onmousedown="SelectStar('st2')" id="st2"></span>
+                    <span class="fa fa-star" onmouseover="ColorStarsOnHover('st3')" onmousedown="SelectStar('st3')" id="st3"></span>
+                    <span class="fa fa-star" onmouseover="ColorStarsOnHover('st4')" onmousedown="SelectStar('st4')" id="st4"></span>
+                    <span class="fa fa-star" onmouseover="ColorStarsOnHover('st5')" onmousedown="SelectStar('st5')" id="st5"></span>
+                    <span class="fa fa-star" onmouseover="ColorStarsOnHover('st6')" onmousedown="SelectStar('st6')" id="st6"></span>
+                </div>
+                <!-- START CAPTCHA -->
+                <div class="capbox" style="display:inline-block;">
+
+                    <div id="CaptchaDiv"></div>
+
+                    <div class="capbox-inner">
+                        <center>
+                            Въведете:<br>
+                        </center>
+
+                        <input type="hidden" id="txtCaptcha">
+                        <input type="text" name="CaptchaInput" id="CaptchaInput" size="15"><br>
+
+                    </div>
+                </div>
+                <!-- END CAPTCHA -->
+            </div>
+            <div>
+                <label for="Content">Вашият отзив:</label>
+                <span style="display:inline-block; color:red; visibility:hidden" id="WarnContent">Коментарът трябва да е под 300 символа!</span>
+                <textarea style="height:100px; resize:none" name="Content" id="Content" class="form-control"></textarea>
+            </div>
+            <div>
+                <input style="position: absolute; top: 79%; right: 0.5%;" type="submit" class="btn btn-primary" id="submit" value="Добави" />
+            </div>
+        </form>
+    </div>
 </div>
+@foreach (var comment in Model.Comments)
+{
+    <div style="background-color:#e2e2e2; padding-left:15px; padding-right:15px; padding-bottom:3px; padding-top:3px; border-radius:20px; margin-top:15px">
+        <p style="display:inline-block">Име: @comment.UserName</p>
+        <p style="display: inline-block; float:right">Дата: @comment.CreatedOn.ToString("MM/dd/yyyy");
+        <div style="border-bottom:1px dashed; border-color:gray"></div>
+        <p>@comment.Content</p>
+    </div>
+}
+<br />
+<br />
+<br />
+<br />
+
 <script>
+    function SwitchToOneClick() {
+        var productinfo = document.getElementById("info");
+        var userinfo = document.getElementById("yourinfo");
+        if (productinfo.style.display == "block") {
+            productinfo.style.display = "none";
+            userinfo.style.display = "block";
+        }
+        else {
+            productinfo.style.display = "block";
+            userinfo.style.display = "none";
+        }
+    }
+
+    function ValidateInput() {
+        var username = document.getElementById("username").value;
+        var content = document.getElementById("Content").value;
+        var usernameWarn = document.getElementById("WarnName");
+        var contentwarn = document.getElementById("WarnContent");
+        if (username.length < 3 || username.length > 25) {
+            usernameWarn.style.visibility = "visible";
+            return false;
+        }
+        if (content.length > 300) {
+            contentwarn.style.visibility = "visible";
+            return false;
+        }
+        return true;
+    }
     var slideIndex = 1;
     showDivs(slideIndex);
 
@@ -123,5 +232,166 @@
             x[i].style.display = "none";
         }
         x[slideIndex - 1].style.display = "block";
+    }
+
+    // Captcha Script
+
+    function checkform(theform) {
+        var why = "";
+
+        if (theform.CaptchaInput.value == "") {
+            why += "- Моля въведете цифрите!\n";
+        }
+        if (theform.CaptchaInput.value != "") {
+            if (ValidCaptcha(theform.CaptchaInput.value) == false) {
+                why += "- Цифрите не съвпадат!\n";
+            }
+        }
+        if (why != "") {
+            alert(why);
+            return false;
+        }
+    }
+
+    var a = Math.ceil(Math.random() * 9) + '';
+    var b = Math.ceil(Math.random() * 9) + '';
+    var c = Math.ceil(Math.random() * 9) + '';
+    var d = Math.ceil(Math.random() * 9) + '';
+    var e = Math.ceil(Math.random() * 9) + '';
+
+    var code = a + b + c + d + e;
+    document.getElementById("txtCaptcha").value = code;
+    document.getElementById("CaptchaDiv").innerHTML = code;
+
+    // Validate input against the generated number
+    function ValidCaptcha() {
+        var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
+        var str2 = removeSpaces(document.getElementById('CaptchaInput').value);
+        if (str1 == str2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Remove the spaces from the entered and generated code
+    function removeSpaces(string) {
+        return string.split(' ').join('');
+    }
+    var starselected = false;
+    function ColorStarsOnHover(star) {
+        var starone = document.getElementById("st1")
+        var startwo = document.getElementById("st2")
+        var starthree = document.getElementById("st3")
+        var starfour = document.getElementById("st4")
+        var starfive = document.getElementById("st5")
+        var starsix = document.getElementById("st6")
+        if (starselected == false) {
+            if (star == "st1") {
+                starone.style.color = "orange";
+                startwo.style.color = "black";
+                starthree.style.color = "black";
+                starfour.style.color = "black";
+                starfive.style.color = "black";
+                starsix.style.color = "black";
+            }
+            if (star == "st2") {
+                starone.style.color = "orange";
+                startwo.style.color = "orange";
+                starthree.style.color = "black";
+                starfour.style.color = "black";
+                starfive.style.color = "black";
+                starsix.style.color = "black";
+            }
+            if (star == "st3") {
+                starone.style.color = "orange";
+                startwo.style.color = "orange";
+                starthree.style.color = "orange";
+                starfour.style.color = "black";
+                starfive.style.color = "black";
+                starsix.style.color = "black";
+            }
+            if (star == "st4") {
+                starone.style.color = "orange";
+                startwo.style.color = "orange";
+                starthree.style.color = "orange";
+                starfour.style.color = "orange";
+                starfive.style.color = "black";
+                starsix.style.color = "black";
+            }
+            if (star == "st5") {
+                starone.style.color = "orange";
+                startwo.style.color = "orange";
+                starthree.style.color = "orange";
+                starfour.style.color = "orange";
+                starfive.style.color = "orange";
+                starsix.style.color = "black";
+            }
+            if (star == "st6") {
+                starone.style.color = "orange";
+                startwo.style.color = "orange";
+                starthree.style.color = "orange";
+                starfour.style.color = "orange";
+                starfive.style.color = "orange";
+                starsix.style.color = "orange";
+            }
+        }
+    }
+    function SelectStar(star) {
+        starselected = true;
+        var starone = document.getElementById("st1")
+        var startwo = document.getElementById("st2")
+        var starthree = document.getElementById("st3")
+        var starfour = document.getElementById("st4")
+        var starfive = document.getElementById("st5")
+        var starsix = document.getElementById("st6")
+        if (star == "st1") {
+            starone.style.color = "orange";
+            startwo.style.color = "black";
+            starthree.style.color = "black";
+            starfour.style.color = "black";
+            starfive.style.color = "black";
+            starsix.style.color = "black";
+        }
+        if (star == "st2") {
+            starone.style.color = "orange";
+            startwo.style.color = "orange";
+            starthree.style.color = "black";
+            starfour.style.color = "black";
+            starfive.style.color = "black";
+            starsix.style.color = "black";
+        }
+        if (star == "st3") {
+            starone.style.color = "orange";
+            startwo.style.color = "orange";
+            starthree.style.color = "orange";
+            starfour.style.color = "black";
+            starfive.style.color = "black";
+            starsix.style.color = "black";
+        }
+        if (star == "st4") {
+            starone.style.color = "orange";
+            startwo.style.color = "orange";
+            starthree.style.color = "orange";
+            starfour.style.color = "orange";
+            starfive.style.color = "black";
+            starsix.style.color = "black";
+        }
+        if (star == "st5") {
+            starone.style.color = "orange";
+            startwo.style.color = "orange";
+            starthree.style.color = "orange";
+            starfour.style.color = "orange";
+            starfive.style.color = "orange";
+            starsix.style.color = "black";
+        }
+        if (star == "st6") {
+            starone.style.color = "orange";
+            startwo.style.color = "orange";
+            starthree.style.color = "orange";
+            starfour.style.color = "orange";
+            starfive.style.color = "orange";
+            starsix.style.color = "orange";
+        }
     }
 </script>
